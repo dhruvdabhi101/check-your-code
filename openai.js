@@ -28,7 +28,10 @@ export async function generateOptimizedCode(code) {
 
 function getContent(code) {
     return `
-    Act like you are a very experienced software developer and you have deep fundamental knowledge . I have a code file. So give the necessary optimizations that can be done in the code. You should optimize the code as a production ready which considers memory space, time complexity, performance, length of code etc. Give the optimisations points/description followed by the optimized code\n.
+    Act like you are a very experienced software developer and you have deep fundamental knowledge . I have a code file. So give the necessary optimizations that can be done in the code. You should optimize the code as a production ready which considers memory space, time complexity, performance, length of code etc. Give the optimisations points/description followed by the optimized code.
+    
+    If the code doesn't have necessary optimizations and if there are no optimizations in the above mentioned terms just give a message "No further optimizations required"
+    \n
     ${code}`
 
 }
