@@ -13,30 +13,26 @@ export async function executeOptimizations(file) {
     }
 }
 
-export async function executeSecurityChecks(){
-  console.log(`Checking for security issues...`);
-  try {
-    const snykCommand = 'snyk test';
-    const op = exec(snykCommand, { encoding: 'utf-8' }, (error, stdout) => {
-      if (error) {
-        console.error('Unable to check security. Something went wrong');
-        return;
-      }
-      console.log(stdout);
-    });
+export async function executeSecurityChecks() {
+    console.log(`Checking for security issues...`);
+    try {
+        const snykCommand = 'snyk test';
+        const op = exec(snykCommand, { encoding: 'utf-8' }, (error, stdout) => {
+            if (error) {
+                console.error('Unable to check security. Something went wrong');
+                return;
+            }
+            console.log(stdout);
+        });
 
-    await new Promise((resolve) => {
-      op.on('exit', (code) => {
-        console.log(`Security check completed with code ${code}`);
-        resolve();
-      });
-    });
-  } catch (error) {
-    console.error('Security check failed:', error);
-  }
-  printOptimizedCode(optimizedCode);
+        await new Promise((resolve) => {
+            op.on('exit', (code) => {
+                console.log(`Security check completed with code ${code}`);
+                resolve();
+            });
+        });
     } catch (error) {
-        console.error('Optimization failed:', error);
+        console.error('Security check failed:', error);
     }
 }
 
