@@ -1,19 +1,22 @@
-import { exec } from 'child_process';
+import chalk from 'chalk';
 import { generateOptimizedCode } from './openai.js';
 import fs from 'fs';
+import { exec } from 'child_process';
 
 export async function executeOptimizations(file) {
-  console.log(`Showing Optimizations in ${file}...`);
+    const codeToOptimize = readFileContent(file);
 
-  // Read the file content or obtain the code you want to optimize
-  const codeToOptimize = readFileContent(file);
+    try {
+        const optimizedCode = await generateOptimizedCode(codeToOptimize);
+        printOptimizedCode(optimizedCode);
+    } catch (error) {
+        console.error('Optimization failed:', error);
+    }
+}
 
+export async function executeSecurityChecks(){
+  console.log(`Checking for security issues...`);
   try {
-    // For Optimizations
-    // const optimizedCode = await generateOptimizedCode(codeToOptimize);
-    // console.log(optimizedCode);
-
-    // For Security
     const snykCommand = 'snyk test';
     const op = exec(snykCommand, { encoding: 'utf-8' }, (error, stdout) => {
       if (error) {
@@ -23,7 +26,6 @@ export async function executeOptimizations(file) {
       console.log(stdout);
     });
 
-    // Wait for the Snyk command to complete
     await new Promise((resolve) => {
       op.on('exit', (code) => {
         console.log(`Security check completed with code ${code}`);
@@ -31,7 +33,7 @@ export async function executeOptimizations(file) {
       });
     });
   } catch (error) {
-    console.error('Operation failed:', error);
+    console.error('Security check failed:', error);
   }
 }
 
@@ -43,5 +45,28 @@ function readFileContent(file) {
         console.error(`Error reading file ${file}:`, error);
         throw error;
     }
+}
+
+function printOptimizedCode(optimizedCode) {
+    // check for lines that start with digits 
+
+    const lines = optimizedCode.split('\n');
+    // color the lines with green if they start with digit
+    let inCodeBlock = false;
+    lines.forEach(line => {
+        if (line[0] >= '0' && line[0] <= '9') {
+            console.log(chalk.greenBright(line));
+        } else {
+            if (line[0] === '`') {
+                inCodeBlock = !inCodeBlock;
+            } else {
+                if (inCodeBlock) {
+                    console.log(chalk.blueBright(line));
+                } else {
+                    console.log(line);
+                }
+            }
+        }
+    })
 }
 
