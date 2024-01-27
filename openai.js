@@ -1,9 +1,10 @@
 import dotenv from "dotenv";
 import OpenAI from "openai";
+import fs from "fs"
 dotenv.config();
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-console.log("API KEY = " + process.env.OPENAI_API_KEY);
+const openaiKey = fs.readFileSync(`${process.env.HOME}/.checkyourcode`, "utf8").split("=")[1].trim();
+const openai = new OpenAI({ apiKey: openaiKey });
 
 export async function generateOptimizedCode(code) {
   try {
