@@ -5,7 +5,6 @@ import { exec } from 'child_process';
 
 export async function executeOptimizations(file) {
     const codeToOptimize = readFileContent(file);
-
     try {
         const optimizedCode = await generateOptimizedCode(codeToOptimize);
         printOptimizedCode(optimizedCode);
@@ -35,6 +34,10 @@ export async function executeSecurityChecks(){
   } catch (error) {
     console.error('Security check failed:', error);
   }
+  printOptimizedCode(optimizedCode);
+    } catch (error) {
+        console.error('Optimization failed:', error);
+    }
 }
 
 function readFileContent(file) {
@@ -48,8 +51,6 @@ function readFileContent(file) {
 }
 
 function printOptimizedCode(optimizedCode) {
-    // check for lines that start with digits 
-
     const lines = optimizedCode.split('\n');
     // color the lines with green if they start with digit
     let inCodeBlock = false;
@@ -69,4 +70,3 @@ function printOptimizedCode(optimizedCode) {
         }
     })
 }
-
