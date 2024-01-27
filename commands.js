@@ -7,7 +7,9 @@ import showDiff from './showDiff.js';
 export async function executeOptimizations(file) {
     const codeToOptimize = readFileContent(file);
     try {
+        var loader = showAnimation()
         const optimizedCode = await generateOptimizedCode(codeToOptimize);
+        stopAnimation(loader)
         printOptimizedCode(optimizedCode, file);
     } catch (error) {
         console.error('Optimization failed:', error);
@@ -69,4 +71,20 @@ function printOptimizedCode(optimizedCode, file) {
         }
     })
     showDiff(file, code)
+}
+
+
+function showAnimation() {
+    return (function () {
+        var P = ["\\", "|", "/", "-"];
+        var x = 0;
+        return setInterval(function () {
+            process.stdout.write("\r" + P[x++]);
+            x &= 3;
+        }, 250);
+    })();
+}
+
+function stopAnimation(loader) {
+    setInterval(loader);
 }
