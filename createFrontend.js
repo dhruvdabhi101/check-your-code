@@ -17,9 +17,9 @@ export default async function createFrontend() {
 
     switch (results.Action) {
         case "Optimize":
-            console.log(`Optimizing file ${chalk.cyan(filename)}...`);
             const answer = await inquirer.prompt({ message: "Enter filename: ", name: "filename" })
             const filename = answer.filename;
+            console.log(`Optimizing file ${chalk.cyan(filename)}...`);
             executeOptimizations(filename);
             break;
         case "Security Check":

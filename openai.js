@@ -3,10 +3,10 @@ import OpenAI from "openai";
 import fs from "fs"
 dotenv.config();
 
-const openaiKey = fs.readFileSync(`${process.env.HOME}/.checkyourcode`, "utf8").split("=")[1].trim();
-const openai = new OpenAI({ apiKey: openaiKey });
-
 export async function generateOptimizedCode(code) {
+
+    const openaiKey = fs.readFileSync(`${process.env.HOME}/.checkyourcode`, "utf8").split("=")[1].trim();
+    const openai = new OpenAI({ apiKey: openaiKey });
   try {
     const completion = await openai.chat.completions.create(
         {
