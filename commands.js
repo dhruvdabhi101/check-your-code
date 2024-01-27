@@ -2,12 +2,13 @@ import chalk from 'chalk';
 import { generateOptimizedCode } from './openai.js';
 import fs from 'fs';
 import { exec } from 'child_process';
+import showDiff from './showDiff.js';
 
 export async function executeOptimizations(file) {
     const codeToOptimize = readFileContent(file);
     try {
         const optimizedCode = await generateOptimizedCode(codeToOptimize);
-        printOptimizedCode(optimizedCode);
+        printOptimizedCode(optimizedCode, file);
     } catch (error) {
         console.error('Optimization failed:', error);
     }
@@ -46,10 +47,11 @@ function readFileContent(file) {
     }
 }
 
-function printOptimizedCode(optimizedCode) {
+function printOptimizedCode(optimizedCode, file) {
     const lines = optimizedCode.split('\n');
     // color the lines with green if they start with digit
     let inCodeBlock = false;
+    let code = ""
     lines.forEach(line => {
         if (line[0] >= '0' && line[0] <= '9') {
             console.log(chalk.greenBright(line));
@@ -58,11 +60,13 @@ function printOptimizedCode(optimizedCode) {
                 inCodeBlock = !inCodeBlock;
             } else {
                 if (inCodeBlock) {
-                    console.log(chalk.blueBright(line));
+                    code += line
+                    code += "\n"
                 } else {
                     console.log(line);
                 }
             }
         }
     })
+    showDiff(file, code)
 }

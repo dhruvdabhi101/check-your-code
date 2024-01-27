@@ -2,22 +2,17 @@ import fs from 'fs';
 import path from 'path';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
-import { promisify } from 'util';
-
-const readdir = promisify(fs.readdir);
-const stat = promisify(fs.stat);
 
 export async function promptFileOrDirectory(currentPath) {
-    const filesAndDirs = await readdir(currentPath);
-    const choices = await Promise.all(filesAndDirs.map(async (item) => {
-        const fullPath = path.resolve(currentPath, item);
-        const stats = await stat(fullPath);
+    const filesAndDirs = fs.readdirSync(currentPath);
+    const choices = filesAndDirs.map(item => {
+        const fullPath = path.join(currentPath, item);
         return {
-            name: stats.isDirectory() ? `${chalk.blue(item)}/` : item,
+            name: fs.statSync(fullPath).isDirectory() ? chalk.blue(item) + '/' : item,
             value: fullPath,
             short: item,
         };
-    }));
+    });
 
     const questions = [
         {
@@ -33,12 +28,12 @@ export async function promptFileOrDirectory(currentPath) {
 }
 
 export async function filePrompt() {
-    const currentPath = process.cwd();
+    let currentPath = process.cwd();
 
     while (true) {
         const selectedItem = await promptFileOrDirectory(currentPath);
 
-        if ((await stat(selectedItem)).isDirectory()) {
+        if (fs.statSync(selectedItem).isDirectory()) {
             currentPath = selectedItem;
         } else {
             console.log(chalk.green(`You selected file: ${selectedItem}`));
