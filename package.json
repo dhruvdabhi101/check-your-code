@@ -1,0 +1,35 @@
+{
+  "name": "check-your-code",
+  "version": "1.0.0",
+  "description": "code review automation tool built with Open AI with ergomatic cli view",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhruvdabhi101/check-your-code.git"
+  },
+  "keywords": [
+    "automation",
+    "code",
+    "review",
+    "code-review"
+  ],
+  "author": "Dhruv-Rushi-Dhrumil",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dhruvdabhi101/check-your-code/issues"
+  },
+  "homepage": "https://github.com/dhruvdabhi101/check-your-code#readme",
+  "dependencies": {
+    "axios": "^1.6.7",
+    "chalk": "^5.3.0",
+    "dotenv": "^16.4.1",
+    "figlet": "^1.7.0",
+    "inquirer": "^9.2.12",
+    "openai": "^4.26.0"
+  }
+}
