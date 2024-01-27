@@ -1,2 +1,5 @@
 node_modules
+main.c
+main.o
+a.out
 .env
