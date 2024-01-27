@@ -1,0 +1,17 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2021, // or the appropriate ECMAScript version for your project
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2021": true // or the appropriate ECMAScript version for your project
+  },
+  "rules": {
+    "sourceType": "off"
+  }
+}
