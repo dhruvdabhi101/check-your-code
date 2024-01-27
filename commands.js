@@ -70,12 +70,14 @@ function printOptimizedCode(optimizedCode, file) {
             }
         }
     })
-    showDiff(file, code)
+    if(code !== ""){
+        showDiff(file, code)
+    }
 }
 
 
 function showAnimation() {
-    return (function () {
+    var loader = (function () {
         var P = ["\\", "|", "/", "-"];
         var x = 0;
         return setInterval(function () {
@@ -83,8 +85,9 @@ function showAnimation() {
             x &= 3;
         }, 250);
     })();
+    return loader;
 }
 
 function stopAnimation(loader) {
-    setInterval(loader);
+    clearInterval(loader);
 }
