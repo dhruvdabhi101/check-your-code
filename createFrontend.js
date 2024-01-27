@@ -1,6 +1,7 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import { executeOptimizations, executeSecurityChecks } from "./commands.js";
+import { filePrompt } from "./filePrompt.js";
 
 export default async function createFrontend() {
     const questions = [
@@ -17,8 +18,7 @@ export default async function createFrontend() {
 
     switch (results.Action) {
         case "Optimize":
-            const answer = await inquirer.prompt({ message: "Enter filename: ", name: "filename" })
-            const filename = answer.filename;
+            const filename = await filePrompt();
             console.log(`Optimizing file ${chalk.cyan(filename)}...`);
             executeOptimizations(filename);
             break;
