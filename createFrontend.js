@@ -1,6 +1,6 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
-import { executeOptimizations } from "./commands.js";
+import { executeOptimizations, executeSecurityChecks } from "./commands.js";
 
 export default async function createFrontend() {
     const questions = [
@@ -13,14 +13,17 @@ export default async function createFrontend() {
     ];
 
     const results = await inquirer.prompt(questions);
-    const answer = await inquirer.prompt({ message: "Enter filename: ", name: "filename" })
 
-    const filename = answer.filename;
 
     switch (results.Action) {
         case "Optimize":
             console.log(`Optimizing file ${chalk.cyan(filename)}...`);
+            const answer = await inquirer.prompt({ message: "Enter filename: ", name: "filename" })
+            const filename = answer.filename;
             executeOptimizations(filename);
+            break;
+        case "Security Check":
+            await executeSecurityChecks();
             break;
         default:
             console.log("Error");
