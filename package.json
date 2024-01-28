@@ -1,6 +1,6 @@
 {
   "name": "check-your-code",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "code review automation tool built with Open AI with ergomatic cli view",
   "main": "index.js",
   "type": "module",
