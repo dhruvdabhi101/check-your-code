@@ -1,9 +1,12 @@
 {
   "name": "check-your-code",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "code review automation tool built with Open AI with ergomatic cli view",
   "main": "index.js",
   "type": "module",
+  "bin": {
+      "check-your-code": "./index.js"
+  },
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
